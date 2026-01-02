@@ -1,0 +1,4 @@
+// Root build.gradle intentionally minimal; repositories are defined in settings.gradle
+tasks.register("clean", Delete) {
+    delete(rootProject.buildDir)
+}
