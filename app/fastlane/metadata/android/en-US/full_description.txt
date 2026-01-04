@@ -1,0 +1,8 @@
+Prayer Time Muter automatically silences your device around prayer times.
+
+Features:
+- Diyanet-compatible prayer times
+- Per-prayer mute offsets
+- Friday noon custom offsets
+- Silent or silent+vibrate modes
+- Offline cache support
