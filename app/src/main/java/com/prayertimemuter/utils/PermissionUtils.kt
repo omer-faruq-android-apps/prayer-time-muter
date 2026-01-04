@@ -47,13 +47,32 @@ class PermissionUtils {
                 !(context.getSystemService(Context.ALARM_SERVICE) as android.app.AlarmManager).canScheduleExactAlarms()
         }
 
-        fun requestExactAlarm(activity: Activity) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        fun requestExactAlarmWithFallback(activity: Activity): Boolean {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return false
+
+            val am = activity.getSystemService(Context.ALARM_SERVICE) as android.app.AlarmManager
+            if (am.canScheduleExactAlarms()) return true
+
+            // Önce resmi exact alarm ekranını dene
+            val primaryResult = runCatching {
                 val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
                     data = Uri.parse("package:${activity.packageName}")
                 }
                 activity.startActivity(intent)
-            }
+                true
+            }.getOrElse { false }
+            if (primaryResult) return true
+
+            // Bazı Huawei/EMUI cihazlarında ekran açılmaz; genel uygulama ayarlarına yönlendir
+            val fallbackResult = runCatching {
+                val fallbackIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.parse("package:${activity.packageName}")
+                }
+                activity.startActivity(fallbackIntent)
+                true
+            }.getOrElse { false }
+
+            return fallbackResult
         }
 
         fun needsBatteryOptimizationException(context: Context): Boolean {

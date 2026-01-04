@@ -50,4 +50,17 @@
     <string name="silencing_before">Silencing %1$s %2$d minutes before</string>
     <string name="restoring_after">Restoring sound %2$d minutes after %1$s</string>
     <string name="check_permissions">Check permissions</string>
+    <string name="mute_foreground_channel_name">Prayer mute</string>
+    <string name="mute_foreground_channel_desc">Keeps mute active during the prayer window</string>
+    <string name="mute_foreground_text">Muting device for prayer time</string>
+    <string name="status_exact_alarm_title">Exact alarm</string>
+    <string name="status_battery_title">Battery optimization</string>
+    <string name="status_on">On</string>
+    <string name="status_off">Off</string>
+    <string name="action_open_exact_alarm">Open alarm settings</string>
+    <string name="action_request_battery">Disable optimization</string>
+    <string name="action_open_battery_settings">Open battery settings</string>
+    <string name="log_saved_to">Log saved to:</string>
+    <string name="log_recent_events">Recent events</string>
+    <string name="logging_enable">Enable troubleshooting logs</string>
 </resources>

@@ -150,6 +150,88 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_exact_alarm_title"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/text_exact_alarm_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_off"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp" />
+
+                <Button
+                    android:id="@+id/btn_open_exact_alarm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_open_exact_alarm"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_battery_title"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/text_battery_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_off"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_request_battery"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/action_request_battery"
+                        style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+                    <Button
+                        android:id="@+id/btn_open_battery_settings"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/action_open_battery_settings"
+                        style="@style/Widget.MaterialComponents.Button.TextButton" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/stale_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

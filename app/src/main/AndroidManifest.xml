@@ -54,6 +54,11 @@
             android:enabled="true"
             android:exported="false" />
 
+        <service
+            android:name=".services.MuteForegroundService"
+            android:enabled="true"
+            android:exported="false" />
+
         <receiver
             android:name=".receivers.BootReceiver"
             android:enabled="true"

@@ -99,6 +99,38 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/logging_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/settings_item_background"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/log_recent_events"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/checkbox_logging"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/logging_enable"
+                android:layout_marginTop="8dp" />
+
+            <Button
+                android:id="@+id/btn_export_logs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/log_saved_to"
+                android:layout_marginTop="8dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/fajr_settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

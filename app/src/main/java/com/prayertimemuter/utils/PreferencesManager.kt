@@ -36,11 +36,12 @@ class PreferencesManager(context: Context) {
         private const val KEY_LAST_PRAYER_TIMES = "last_prayer_times"
         private const val KEY_PERMISSIONS_GRANTED = "permissions_granted"
         private const val KEY_LAST_FETCH_FAILED = "last_fetch_failed"
+        private const val KEY_LOGGING_ENABLED = "logging_enabled"
         
         private const val DEFAULT_MINUTES_BEFORE = 5
-        private const val DEFAULT_MINUTES_AFTER = 15
+        private const val DEFAULT_MINUTES_AFTER = 30
         private const val DEFAULT_FRIDAY_BEFORE = 10
-        private const val DEFAULT_FRIDAY_AFTER = 20
+        private const val DEFAULT_FRIDAY_AFTER = 45
         private val DEFAULT_SILENT_MODE = SilentMode.SILENT.name
         private const val DEFAULT_ALLOW_MOBILE_DATA = true
         private const val DEFAULT_RETRY_COUNT = 0
@@ -168,6 +169,10 @@ class PreferencesManager(context: Context) {
     var lastFetchFailed: Boolean
         get() = prefs.getBoolean(KEY_LAST_FETCH_FAILED, DEFAULT_LAST_FETCH_FAILED)
         set(value) = prefs.edit().putBoolean(KEY_LAST_FETCH_FAILED, value).apply()
+
+    var loggingEnabled: Boolean
+        get() = prefs.getBoolean(KEY_LOGGING_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(KEY_LOGGING_ENABLED, value).apply()
     
     fun getAllPrayerSettings(): Map<String, Pair<Int, Int>> {
         val prayers = listOf("İmsak", "Güneş", "Öğle", "İkindi", "Akşam", "Yatsı")

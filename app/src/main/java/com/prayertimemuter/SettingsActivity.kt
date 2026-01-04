@@ -51,6 +51,8 @@ class SettingsActivity : AppCompatActivity() {
         binding.maghribAfter.setText(preferencesManager.getMinutesAfter("Akşam").toString())
         binding.ishaBefore.setText(preferencesManager.getMinutesBefore("Yatsı").toString())
         binding.ishaAfter.setText(preferencesManager.getMinutesAfter("Yatsı").toString())
+        binding.checkboxLogging.isChecked = preferencesManager.loggingEnabled
+        binding.btnExportLogs.isEnabled = preferencesManager.loggingEnabled
     }
     
     private fun setupClickListeners() {
@@ -60,6 +62,29 @@ class SettingsActivity : AppCompatActivity() {
         
         binding.btnCancel.setOnClickListener {
             finish()
+        }
+
+        binding.checkboxLogging.setOnCheckedChangeListener { _, isChecked ->
+            binding.btnExportLogs.isEnabled = isChecked
+        }
+
+        binding.btnExportLogs.setOnClickListener {
+            exportLogs()
+        }
+    }
+
+    private fun exportLogs() {
+        val source = java.io.File(filesDir, "prayer_events.log")
+        if (!source.exists()) {
+            Toast.makeText(this, "Log dosyası yok", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val target = java.io.File(getExternalFilesDir(null), "prayer_events.log")
+        runCatching {
+            source.copyTo(target, overwrite = true)
+            Toast.makeText(this, "Kopyalandı: ${target.absolutePath}", Toast.LENGTH_LONG).show()
+        }.onFailure {
+            Toast.makeText(this, "Kopyalama başarısız: ${it.message}", Toast.LENGTH_LONG).show()
         }
     }
     
@@ -90,6 +115,8 @@ class SettingsActivity : AppCompatActivity() {
             
             preferencesManager.setMinutesBefore("Yatsı", binding.ishaBefore.text.toString().toInt())
             preferencesManager.setMinutesAfter("Yatsı", binding.ishaAfter.text.toString().toInt())
+            preferencesManager.loggingEnabled = binding.checkboxLogging.isChecked
+            binding.btnExportLogs.isEnabled = preferencesManager.loggingEnabled
             
             Toast.makeText(this, "Ayarlar kaydedildi", Toast.LENGTH_SHORT).show()
             

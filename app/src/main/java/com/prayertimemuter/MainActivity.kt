@@ -2,6 +2,7 @@ package com.prayertimemuter
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Build
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -12,6 +13,7 @@ import com.prayertimemuter.services.PrayerAlarmManager
 import com.prayertimemuter.services.PrayerTimeService
 import com.prayertimemuter.utils.PermissionUtils
 import com.prayertimemuter.utils.PreferencesManager
+import com.prayertimemuter.utils.LogUtils
 import com.prayertimemuter.network.RetrofitClient
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -55,6 +57,35 @@ class MainActivity : AppCompatActivity() {
         binding.btnRefreshTimes.setOnClickListener {
             refreshTodayTimes()
         }
+
+        binding.btnOpenExactAlarm.setOnClickListener {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                Toast.makeText(this, "Bu Android sürümünde ek alarm izni yok", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val hasExact = !PermissionUtils.needsExactAlarmPermission(this)
+            if (hasExact) {
+                Toast.makeText(this, "Exact alarm izni zaten açık", Toast.LENGTH_SHORT).show()
+            } else {
+                val opened = PermissionUtils.requestExactAlarmWithFallback(this)
+                if (!opened) {
+                    Toast.makeText(
+                        this,
+                        "Ayar açılamadı. Lütfen Ayarlar > Uygulamalar > Prayer Time Muter > Özel erişimler/Alarmlar yolunu izleyin.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+
+        binding.btnRequestBattery.setOnClickListener {
+            PermissionUtils.requestBatteryOptimizationException(this)
+        }
+
+        binding.btnOpenBatterySettings.setOnClickListener {
+            PermissionUtils.openBatteryOptimizationSettings(this)
+        }
     }
 
     private fun showDndPermissionDialog() {
@@ -73,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         PermissionUtils.requestRuntimePermissions(this)
         // Exact alarm (API 31+)
         if (PermissionUtils.needsExactAlarmPermission(this)) {
-            PermissionUtils.requestExactAlarm(this)
+            PermissionUtils.requestExactAlarmWithFallback(this)
         }
         // Battery optimization muafiyeti (API 23+)
         if (PermissionUtils.needsBatteryOptimizationException(this)) {
@@ -101,6 +132,16 @@ class MainActivity : AppCompatActivity() {
         } else {
             binding.stalePanel.visibility = View.GONE
         }
+
+        updatePermissionStatuses()
+    }
+
+    private fun updatePermissionStatuses() {
+        val exactOn = !PermissionUtils.needsExactAlarmPermission(this)
+        val batteryOn = PermissionUtils.isIgnoringBatteryOptimizations(this)
+
+        binding.textExactAlarmStatus.text = if (exactOn) getString(R.string.status_on) else getString(R.string.status_off)
+        binding.textBatteryStatus.text = if (batteryOn) getString(R.string.status_on) else getString(R.string.status_off)
     }
     
     private fun toggleService() {
@@ -151,6 +192,7 @@ class MainActivity : AppCompatActivity() {
                 val success = manager.fetchAndScheduleWithRetry(city.id)
                 preferencesManager.lastFetchFailed = !success
                 updateStalePanel()
+                LogUtils.append(this@MainActivity, "StartService: schedule retry success=$success")
             }
         }
     }
