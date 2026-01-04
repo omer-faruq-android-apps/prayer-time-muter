@@ -41,13 +41,15 @@
             android:name=".SettingsActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.PrayerTimeMuter.NoActionBar" />
+            android:theme="@style/Theme.PrayerTimeMuter.NoActionBar.Light"
+            android:forceDarkAllowed="false" />
 
         <activity
             android:name=".CitySelectionActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.PrayerTimeMuter.NoActionBar" />
+            android:theme="@style/Theme.PrayerTimeMuter.NoActionBar.Light"
+            android:forceDarkAllowed="false" />
 
         <service
             android:name=".services.PrayerTimeService"
