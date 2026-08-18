@@ -2,6 +2,10 @@
 
 This app automatically silences your phone around prayer times using https://prayertimes.api.abdus.dev/. You can pick country/city, set per-prayer before/after offsets, give Friday noon its own offsets, and choose silent vs silent+vibrate. See below for permissions and battery notes.
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.prayertimemuter/)
+
 ## API
 - Search (`search`), list (`locations`), and fetch prayer times by `location_id`
 - Diyanet-compatible times: https://prayertimes.api.abdus.dev/
